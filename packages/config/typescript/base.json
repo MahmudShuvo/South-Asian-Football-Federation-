@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "SAFF base",
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "moduleDetection": "force",
+
+    /* Strictness. Every flag below has caught a real bug in a data-heavy app.
+       Turning these on later means fixing hundreds of errors at once, so they
+       go on now while the codebase is empty. */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "useUnknownInCatchVariables": true,
+    "verbatimModuleSyntax": true,
+
+    /* Deliberately NOT enabled: noUnusedLocals / noUnusedParameters.
+       ESLint reports these as warnings without blocking `tsc`, which keeps
+       work-in-progress code compiling while still surfacing the problem. */
+
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "noEmit": true
+  },
+  "exclude": ["node_modules", "dist", ".next", "coverage"]
+}

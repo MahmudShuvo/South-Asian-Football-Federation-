@@ -1,0 +1,19 @@
+{
+  "name": "@saff/database",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Prisma schema, migrations and seed data",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@saff/config": "workspace:*",
+    "eslint": "10.8.0",
+    "typescript": "5.9.3"
+  }
+}

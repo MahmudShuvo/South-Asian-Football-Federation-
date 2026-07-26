@@ -1,0 +1,25 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# --------------------------------------------------------------------------
+# Supply-chain protection.
+#
+# pnpm quarantines very recently published versions, which is the cheapest
+# available defence against a compromised maintainer account pushing a malicious
+# patch release — the attack pattern behind the 2025 npm incidents.
+#
+# We keep the quarantine and pin dependencies to versions that have already
+# cleared it, rather than adding exclusions. Being 24 hours behind the newest
+# patch release costs us nothing; shipping a poisoned postinstall script during
+# the tournament would cost us everything.
+# --------------------------------------------------------------------------
+minimumReleaseAge: 1440
+
+# Only these packages may run install scripts. Everything else is blocked, so a
+# malicious postinstall in a transitive dependency cannot execute.
+allowBuilds:
+  "@tailwindcss/oxide": true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true

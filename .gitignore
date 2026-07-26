@@ -1,0 +1,68 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+.yarn/
+
+# builds
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+
+# turbo
+.turbo/
+
+# env — never commit secrets
+.env
+.env*.local
+.env.production
+!.env.example
+
+# python (packages/ai-core)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+*.egg-info/
+
+# ml artifacts — models are rebuilt from data, not versioned here
+*.pkl
+*.joblib
+models/artifacts/
+
+# database dumps and backups
+*.sql.gz
+*.dump
+backups/
+
+# testing
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# editors
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+.idea/
+*.swp
+
+# os
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# vercel
+.vercel

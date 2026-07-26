@@ -1,0 +1,29 @@
+# Normalise line endings.
+#
+# Prettier is configured with `endOfLine: "lf"`. Without this file, Git on Windows
+# checks files out as CRLF, `pnpm format:check` then fails on a freshly cloned
+# repo, and CI disagrees with local for reasons nobody enjoys debugging.
+#
+# `eol=lf` means: LF in the repository AND LF in the working tree, on every OS.
+* text=auto eol=lf
+
+# Husky hooks are shell scripts. CRLF makes them fail with an opaque
+# "bad interpreter" or silently not run at all.
+.husky/* text eol=lf
+
+# Lockfile: LF, and don't show it in diffs — it is generated, and a 6000-line
+# diff buries the change you actually need to review.
+pnpm-lock.yaml text eol=lf linguist-generated=true -diff
+
+# Binary — never touch these.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.pdf binary
+*.pkl binary
+*.joblib binary

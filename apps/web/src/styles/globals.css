@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+/* shadcn/ui targets a `.dark` class rather than the media query, so the theme can
+   be toggled by the user and persisted. */
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------------------
+   Design tokens — docs/01-architecture-day1.md section 10.2
+   Tailwind v4 is CSS-first: these variables ARE the config. There is no
+   tailwind.config.js.
+
+   Naming is semantic (--brand-primary, not --green) so a rebrand is a token
+   change rather than a find-and-replace across components.
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* Light theme. Ships, but dark is the design source of truth (section 10.1):
+     football is consumed at night here, dark saves OLED battery on mid-range
+     Androids, and charts read better against a dark ground. */
+  --background: #ffffff;
+  --surface: #f8fafc;
+  --surface-raised: #f1f5f9;
+  --border: #e2e8f0;
+  --foreground: #0a0e14;
+  --foreground-secondary: #475569;
+  --foreground-muted: #64748b;
+
+  --brand-primary: #00a851;
+  --brand-primary-foreground: #ffffff;
+  --brand-accent: #6d4ce8;
+  --brand-accent-foreground: #ffffff;
+
+  --result-win: #00a851;
+  --result-draw: #64748b;
+  --result-loss: #dc2626;
+
+  --positive: #16a34a;
+  --warning: #d97706;
+  --negative: #dc2626;
+
+  --ring: #00a851;
+  --radius: 0.625rem;
+}
+
+.dark {
+  --background: #0a0e14;
+  --surface: #131820;
+  --surface-raised: #1c2333;
+  --border: #252d3d;
+  --foreground: #f3f5f9;
+  --foreground-secondary: #94a3b8;
+  --foreground-muted: #64748b;
+
+  --brand-primary: #00d46a;
+  --brand-primary-foreground: #04140a;
+  --brand-accent: #7c5cff;
+  --brand-accent-foreground: #0b0616;
+
+  --result-win: #00d46a;
+  --result-draw: #94a3b8;
+  --result-loss: #ff4757;
+
+  --positive: #22c55e;
+  --warning: #f59e0b;
+  --negative: #ef4444;
+
+  --ring: #00d46a;
+}
+
+/* `@theme inline` maps our semantic variables onto Tailwind's utility namespace,
+   so `bg-surface`, `text-foreground-muted` and `border-border` all work while the
+   values stay swappable per theme. */
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-border: var(--border);
+  --color-foreground: var(--foreground);
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-foreground-muted: var(--foreground-muted);
+
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-foreground: var(--brand-primary-foreground);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-accent-foreground: var(--brand-accent-foreground);
+
+  --color-result-win: var(--result-win);
+  --color-result-draw: var(--result-draw);
+  --color-result-loss: var(--result-loss);
+
+  --color-positive: var(--positive);
+  --color-warning: var(--warning);
+  --color-negative: var(--negative);
+
+  --color-ring: var(--ring);
+
+  /* Chart series. Ordered for maximum separation between adjacent series, and
+     checked so no two neighbours collide under deuteranopia — section 10.2
+     forbids encoding meaning in colour alone, but the palette should still be
+     readable on its own. */
+  --color-chart-1: #00d46a;
+  --color-chart-2: #7c5cff;
+  --color-chart-3: #38bdf8;
+  --color-chart-4: #fbbf24;
+  --color-chart-5: #fb7185;
+  --color-chart-6: #34d399;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    /* Prevent iOS Safari inflating text in landscape, which breaks stat tables. */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    /* Tabular figures everywhere by default. Without this, stat columns jitter as
+       digits change width — the single most common way a football site looks
+       amateurish (section 10.2). */
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Respect the OS setting for users who get motion sick. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@utility stat-figure {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}

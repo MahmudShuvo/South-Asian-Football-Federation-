@@ -1,0 +1,79 @@
+version: 2
+
+updates:
+  # ---------------------------------------------------------------------------
+  # npm dependencies across the whole workspace.
+  #
+  # Grouped deliberately. Ungrouped Dependabot on a monorepo produces a dozen PRs
+  # a week, which get ignored, which means security patches get ignored too. One
+  # PR per concern is one PR that actually gets reviewed.
+  #
+  # Note: we pin exact versions (.npmrc save-exact) and keep pnpm's 24-hour
+  # release-age quarantine (ADR-018), so Dependabot is the deliberate, reviewed
+  # path for upgrades rather than a firehose.
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "03:00"
+      timezone: Asia/Dhaka
+    open-pull-requests-limit: 5
+    versioning-strategy: increase
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+    groups:
+      # Next + React must move together; splitting them produces a broken tree.
+      framework:
+        patterns:
+          - "next"
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+          - "@next/*"
+      # Lint/format toolchain. Breakage here is noisy but never ships to users.
+      tooling:
+        patterns:
+          - "eslint*"
+          - "@eslint/*"
+          - "typescript-eslint"
+          - "prettier*"
+          - "husky"
+          - "lint-staged"
+          - "@commitlint/*"
+          - "turbo"
+      styling:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+          - "clsx"
+          - "tailwind-merge"
+          - "class-variance-authority"
+          - "lucide-react"
+      # TypeScript is excluded from the tooling group on purpose: upgrading it is
+      # a decision, not a chore. See ADR-015 — typescript-eslint caps at <6.1.0,
+      # so a TS major bump silently breaks type-aware linting.
+      typescript:
+        patterns:
+          - "typescript"
+
+  # Keep Actions pinned and current. Stale action versions are a real supply-chain
+  # surface, and our entire AI pipeline runs on Actions (ADR-006).
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore(ci)"
+
+  # Python side, from Day 11. Declared now so it starts working the moment
+  # packages/ai-core/pyproject.toml exists, rather than being forgotten.
+  - package-ecosystem: uv
+    directory: "/packages/ai-core"
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore(ai)"

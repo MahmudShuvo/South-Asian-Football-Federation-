@@ -1,0 +1,19 @@
+{
+  "name": "@saff/shared-types",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Types shared between the web app, the future mobile app, and the AI pipeline contracts",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@saff/config": "workspace:*",
+    "eslint": "10.8.0",
+    "typescript": "5.9.3"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "saff-ai-hub",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI-powered football analytics for South Asian football",
+  "packageManager": "pnpm@11.17.0",
+  "engines": {
+    "node": ">=22.12.0",
+    "pnpm": ">=11.0.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint -- --fix",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,json,md,css,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,json,md,css,yml,yaml}\"",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "21.2.1",
+    "@commitlint/config-conventional": "21.2.0",
+    "husky": "9.1.7",
+    "lint-staged": "17.2.0",
+    "prettier": "3.9.6",
+    "prettier-plugin-tailwindcss": "0.8.1",
+    "turbo": "2.10.7",
+    "typescript": "5.9.3"
+  }
+}
